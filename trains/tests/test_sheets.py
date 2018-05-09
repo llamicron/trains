@@ -1,5 +1,6 @@
 import unittest
 
+from .. import sheets
 from ..sheets import GoogleSheets
 
 class TestGoogleSheets(unittest.TestCase):
@@ -17,3 +18,9 @@ class TestGoogleSheets(unittest.TestCase):
         assert len(rows[0]) == 3
 
         assert 'tests' in rows[1][2]
+
+    def test_role_associations(self):
+        roles = sheets.volunteer_roles
+        assert '42' in roles['12101808']
+        assert 'SK' in roles['12109793']
+        assert set(['42', '75', '80', 'PT', 'SA']) == set(roles['2274896'])

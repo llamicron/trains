@@ -30,27 +30,47 @@ class GoogleSheets(object):
         return result.get('values', [])
 
 
+# Data proccessing
+# Just getting it ready for actual use
 
 google = GoogleSheets()
 
-# Training Codes
-trainings = []
-keys = ['id', 'code', 'title']
-for record in google.get_sheet_data('training_codes!A2:C'):
-    trainings.append(dict(zip(keys, record)))
+# Flat is better than nested.
+# Namespaces are one honking great idea -- let's do more of those!
+# - The Zen of Python, Tim Peters
 
-# Role Codes
-roles = []
-keys = ['id', 'code', 'title']
-for record in google.get_sheet_data('role_codes!A2:C'):
-    roles.append(dict(zip(keys, record)))
-
-# Volunteers
+# Get Volunteers
 volunteers = []
 rows = google.get_sheet_data('volunteers!A:S')
 keys = [s.lower() for s in rows[0]]
 for values in rows[1:]:
     volunteers.append(dict(zip(keys, values)))
 
-# How to use:
-# from sheets import volunteers, trainings, roles
+# Get Training Codes
+trainings = []
+keys = ['id', 'code', 'title']
+for record in google.get_sheet_data('training_codes!A2:C'):
+    trainings.append(dict(zip(keys, record)))
+
+# Get Role Codes
+roles = []
+keys = ['id', 'code', 'title']
+for record in google.get_sheet_data('role_codes!A2:C'):
+    roles.append(dict(zip(keys, record)))
+
+
+# Associate roles with members, eg:
+# {
+#   'memberid': ['ABC', 'XYZ', '123']
+# }
+volunteer_roles = {}
+for vol in volunteers:
+    if not vol['memberid'] in volunteer_roles.keys():
+        volunteer_roles[vol['memberid']] = []
+
+    for role in roles:
+        if role['title'].lower() == vol['position'].lower():
+            volunteer_roles[str(vol['memberid'])].append(role['code'])
+
+
+
