@@ -1,27 +1,34 @@
-from sheets import GoogleSheets
+from .sheets import trainings, roles, volunteers
 
-google = GoogleSheets()
+def role_code(volunteer):
+    """
+    Looks in google sheets for a record with a matching title, and return the associated code
+    """
+    for role in roles:
+        if role['title'].lower() == volunteer['position'].lower():
+            return role['code']
 
+def get_roles(volunteers):
+    """
+    returns a `dict` like this:
+    {
+        'memberid': ['A09', 'ABC', 'XYZ', '123']
+    }
+    The data from my.scouting.org can only relate one volunteer to one role.
+    There are duplicated volunteers, with a different postition in each record.
+    This will associate each volunteer with the proper roles, and remove duplicates.
 
-# Training Codes
-trainings = []
-keys = ['id', 'code', 'title']
-for record in google.get_sheet_data('training_codes!A2:C'):
-    trainings.append(dict(zip(keys, record)))
+    Note: sometimes 'role' and 'position' are used interchangibly. I try to use role in the code.
+    """
+    role_list = {}
+    for vol in volunteers:
+        if not vol['memberid'] in role_list.keys():
+            role_list[vol['memberid']] = []
+        role_list[str(vol['memberid'])].append(role_code(vol))
+    return role_list
 
-# Role Codes
-roles = []
-keys = ['id', 'code', 'title']
-for record in google.get_sheet_data('role_codes!A2:C'):
-    roles.append(dict(zip(keys, record)))
-
-# Volunteers
-volunteers = []
-rows = google.get_sheet_data('volunteers!A:S')
-keys = [s.lower() for s in rows[0]]
-for values in rows[1:]:
-    volunteers.append(dict(zip(keys, values)))
 
 
 def main():
     return "Here's the entry point"
+
