@@ -3,6 +3,9 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 
 class GoogleSheets(object):
+    """
+    Custom interface for getting simple data out of Google Sheets
+    """
     def __init__(self, storage_file='credentials.json', secret_file='client_secret.json'):
         file_path = 'trains/data/'
         self.sheet_id = '1Qa_fuxmJKU84qfL1z73EcSpy-K2Z_JtecPSedWle9M8'
