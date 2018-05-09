@@ -1,6 +1,6 @@
 import unittest
 
-from sheets import GoogleSheets
+from ..sheets import GoogleSheets
 
 class TestGoogleSheets(unittest.TestCase):
     def test_init(self):
