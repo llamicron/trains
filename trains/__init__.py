@@ -1,6 +1,10 @@
 from flask import Flask, render_template, jsonify
 
-from sheets import volunteers, volunteer_roles as roles, trainings
+try:
+    from sheets import volunteers, trainings, roles, role_map
+except ImportError:
+    from .sheets import volunteers, trainings, roles, role_map
+
 
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
@@ -30,6 +34,10 @@ def serve_volunteers():
 def serve_trainings():
     return jsonify(trainings)
 
+@app.route('/roleMap', methods=['GET'])
+def serve_role_map():
+    return jsonify(role_map)
+
 @app.route('/roles', methods=['GET'])
 def serve_roles():
     return jsonify(roles)
@@ -37,8 +45,10 @@ def serve_roles():
 
 def main():
     app.config['DEBUG'] = False
-    app.run('0.0.0.0')
-
+    try:
+        app.run('0.0.0.0', port=80)
+    except PermissionError:
+        print("Permission Denied. This uses port 80. Try again with sudo.")
 
 if __name__ == '__main__':
     app.config['DEBUG'] = True

@@ -21,6 +21,14 @@ ul.help-list pre {
   /* border-left: 2px solid #3E51B5; */
 }
 
+ul.role-list {
+  list-style: none;
+  overflow:hidden;
+}
+
+ul.role-list li {
+  padding: 5px;
+}
 /* End Custom */
 
 .demo-ribbon {

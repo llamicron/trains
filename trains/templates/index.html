@@ -34,7 +34,7 @@
 
     <script src="%% url_for('static', filename='axios.min.js') %%"></script>
     <script src="%% url_for('static', filename='vue.min.js') %%"></script>
-    <script src="%% url_for('static', filename='trains.js') %%"></script>
+
   </head>
   <body>
     <div id="main" class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
@@ -58,14 +58,15 @@
         <div class="demo-container mdl-grid">
           <div class="mdl-cell mdl-cell--1-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
           <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
-            <h3>Write an Email</h3>
+            <h3>Write the Email</h3>
             <div class="mdl-grid">
               <!-- Email Text Box -->
               <div class="mdl-cell mdl-cell--6-col">
-                  <div class="mdl-textfield mdl-js-textfield" style="width: 100%">
-                    <textarea class="mdl-textfield__input" type="text" rows="12" id="emailText"></textarea>
-                    <label class="mdl-textfield__label" for="emailText">Email Text</label>
-                  </div>
+                <h4>Email Text</h4>
+                <div class="mdl-textfield mdl-js-textfield" style="width: 100%">
+                  <textarea class="mdl-textfield__input" type="text" rows="12" id="emailText"></textarea>
+                  <label class="mdl-textfield__label" for="emailText">Email Text</label>
+                </div>
               </div>
               <!-- Help Area -->
               <div class="mdl-cell mdl-cell--6-col">
@@ -80,8 +81,44 @@
             </div>
             <h3>Choose Recipients</h3>
             <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--12-col">
-
+              <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="allRoles">
+                  <input @click="toggleAllRoles" type="checkbox" id="allRoles" class="mdl-switch__input">
+                  <span class="mdl-switch__label">Everyone</span>
+                </label>
+                <hr>
+              </div>
+            </div>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                <ul class="role-list">
+                  <li v-for="role in roles.slice(0, aThird)">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
+                      <input @click="selectRole(role.code)" type="checkbox" :id="role.code" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">{{ role.title }}</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                <ul class="role-list">
+                  <li v-for="role in roles.slice(aThird, aThird * 2)">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
+                      <input @click="selectRole(role.code)" type="checkbox" :id="role.code" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">{{ role.title }}</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                <ul class="role-list">
+                  <li v-for="role in roles.slice(aThird * 2, aThird * 3)">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
+                      <input @click="selectRole(role.code)" type="checkbox" :id="role.code" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">{{ role.title }}</span>
+                    </label>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -99,5 +136,6 @@
       </main>
     </div>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="%% url_for('static', filename='trains.js') %%"></script>
   </body>
 </html>

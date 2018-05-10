@@ -7,7 +7,7 @@ class GoogleSheets(object):
     Custom interface for getting simple data out of Google Sheets
     """
     def __init__(self, storage_file='credentials.json', secret_file='client_secret.json'):
-        file_path = 'trains/data/'
+        file_path = 'trains/'
         self.sheet_id = '1Qa_fuxmJKU84qfL1z73EcSpy-K2Z_JtecPSedWle9M8'
 
         SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
@@ -58,19 +58,20 @@ keys = ['id', 'code', 'title']
 for record in google.get_sheet_data('role_codes!A2:C'):
     roles.append(dict(zip(keys, record)))
 
-
 # Associate roles with members, eg:
 # {
 #   'memberid': ['ABC', 'XYZ', '123']
 # }
-volunteer_roles = {}
+# This is basically a pivot table
+role_map = {}
 for vol in volunteers:
-    if not vol['memberid'] in volunteer_roles.keys():
-        volunteer_roles[vol['memberid']] = []
+    if not vol['memberid'] in role_map.keys():
+        role_map[vol['memberid']] = []
 
     for role in roles:
         if role['title'].lower() == vol['position'].lower():
-            volunteer_roles[str(vol['memberid'])].append(role['code'])
+            role_map[str(vol['memberid'])].append(role['code'])
+assert role_map
 
 
 keys = ["incomplete_mandatory", "incomplete_classroom", "incomplete_online"]
