@@ -13,3 +13,6 @@ upload: clean build
 
 test:
 	pytest
+
+run:
+	python trains/__init__.py

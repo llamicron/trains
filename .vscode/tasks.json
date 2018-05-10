@@ -1,6 +1,15 @@
 {
   "tasks": [
     {
+      "taskName": "run webserver",
+      "command": "python",
+      "suppressTaskName": true,
+      "args": [
+        "trains/__init__.py"
+      ],
+      "problemMatcher": []
+    },
+    {
       "taskName": "build",
       "command": "make",
       "suppressTaskName": true,
@@ -46,9 +55,6 @@
     {
       "label": "test",
       "command": "pytest",
-      // "args": [
-      //   "junc/tests/test_junc.py"
-      // ],
       "group": {
         "kind": "test",
         "isDefault": true
