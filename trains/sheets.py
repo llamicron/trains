@@ -73,4 +73,11 @@ for vol in volunteers:
             volunteer_roles[str(vol['memberid'])].append(role['code'])
 
 
-
+keys = ["incomplete_mandatory", "incomplete_classroom", "incomplete_online"]
+volunteer_trainings = {}
+for vol in volunteers:
+    for key in keys:
+        try:
+            vol[key] = [s.strip().upper() for s in vol[key].split(',')]
+        except KeyError:
+            vol[key] = []
