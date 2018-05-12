@@ -86,8 +86,7 @@
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
                 <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="allRoles">
-                  <!-- <input @click="toggleAllRoles" type="checkbox" id="allRoles" class="mdl-switch__input"> -->
-                  <input type="checkbox" id="allRoles" class="mdl-switch__input">
+                  <input type="checkbox" v-model="allRoles" id="allRoles" class="mdl-switch__input">
                   <span class="mdl-switch__label">Everyone</span>
                 </label>
                 <hr>
@@ -95,37 +94,17 @@
             </div>
             <!-- Role Select Grid -->
             <div class="mdl-grid">
-              <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-                <ul class="role-list">
-                  <li v-for="role in roles.slice(0, aThird)">
-                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
-                      <input type="checkbox" :id="role.code" class="mdl-checkbox__input">
-                      <span class="mdl-checkbox__label">{{ role.title }}</span>
-                    </label>
-                  </li>
-                </ul>
-              </div> -->
               <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone" v-for="y, x in [(0, 1), (1, 2), (2, 3)]">
                 <ul class="role-list">
                   <li v-for="role in roles.slice(aThird * x, aThird * y)">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
                       <!-- Not using v-model here for...reasons -->
-                      <input type="checkbox" @click="toggleRoleSelect(role.code)" :id="role.code" class="mdl-checkbox__input">
+                      <input type="checkbox" @click="toggleRoleSelect(role.code)" :id="role.code" class="roleSwitch mdl-checkbox__input">
                       <span class="mdl-checkbox__label">{{ role.title }}</span>
                     </label>
                   </li>
                 </ul>
               </div>
-              <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-                <ul class="role-list">
-                  <li v-for="role in roles.slice(aThird * 2, aThird * 3)">
-                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
-                      <input type="checkbox" v-model="selectedRoles[role.code]" :id="role.code" class="mdl-checkbox__input">
-                      <span class="mdl-checkbox__label">{{ role.title }}</span>
-                    </label>
-                  </li>
-                </ul>
-              </div> -->
             </div>
           </div>
         </div>

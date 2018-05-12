@@ -5,7 +5,8 @@ var app = new Vue({
     roles: [],
     roleMap: {},
     trainings: [],
-    selectedRoles: []
+    selectedRoles: [],
+    allRoles: false
   },
 
   methods: {
@@ -68,6 +69,7 @@ var app = new Vue({
       });
     },
 
+    // Switches a single role code
     toggleRoleSelect(roleCode) {
       roleCode = String(roleCode);
       index = this.selectedRoles.indexOf(roleCode);
@@ -76,8 +78,32 @@ var app = new Vue({
       } else {
         this.selectedRoles.splice(index, 1)
       }
-    }
+    },
 
+    // Turns all the roles on or off with the 'everyone' switch
+    allRolesOn(on=true) {
+      if (on) {
+        this.allRoleSwitchesOn();
+        this.selectedRoles = this.roles.map(x => String(x.code));
+      } else {
+        this.allRoleSwitchesOn(false);
+        this.selectedRoles = [];
+      }
+    },
+
+    // The MDL switches won't toggle on there own. Need to do it manually. This is only the appearance of the switch.
+    allRoleSwitchesOn(on=true) {
+      switches = document.getElementsByClassName('roleSwitch');
+
+      for (let i = 0; i < switches.length; i++) {
+        const sw = switches[i].parentElement.MaterialCheckbox;
+        if (on) {
+          sw.check();
+        } else {
+          sw.uncheck();
+        }
+      }
+    }
   },
 
   mounted() {
@@ -88,5 +114,11 @@ var app = new Vue({
     aThird: function () {
       return Math.ceil(this.roles.length / 3)
     }
-  }
+  },
+
+  watch: {
+    allRoles: function() {
+      this.allRolesOn(this.allRoles);
+    }
+  },
 })
