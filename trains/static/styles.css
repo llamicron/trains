@@ -4,6 +4,8 @@
   padding-left: 0;
   background-color: ghostwhite;
   padding: 5px;
+
+  font-size: 18;
 }
 
 ul.help-list > li {
@@ -28,7 +30,35 @@ ul.role-list {
 
 ul.role-list li {
   padding: 5px;
+  margin: 10px;
+  list-style-position: inside;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+@media screen and (max-width: 530px) {
+  .content {
+    padding: 5px !important;
+  }
+
+  ul.role-list {
+    padding-left: 0 !important;
+  }
+}
+
+#preview-card {
+  width: 100%;
+}
+
+#email-card {
+  width: 100%;
+}
+
+#help-card {
+  width: 100%;
+}
+
 /* End Custom */
 
 .ribbon {
@@ -38,6 +68,12 @@ ul.role-list li {
   -webkit-flex-shrink: 0;
       -ms-flex-negative: 0;
           flex-shrink: 0;
+}
+
+.separator {
+  width: 100%;
+  height: 10vh;
+  background-color: #3F51B5;
 }
 
 .main {
@@ -60,7 +96,7 @@ ul.role-list li {
 .content {
   border-radius: 2px;
   padding: 80px 56px;
-  margin-bottom: 80px;
+  /* margin-bottom: 80px; */
 }
 
 

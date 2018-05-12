@@ -6,7 +6,8 @@ var app = new Vue({
     roleMap: {},
     trainings: [],
     selectedRoles: [],
-    allRoles: false
+    allRoles: false,
+    showPreview: true
   },
 
   methods: {
@@ -103,7 +104,8 @@ var app = new Vue({
           sw.uncheck();
         }
       }
-    }
+    },
+
   },
 
   mounted() {
