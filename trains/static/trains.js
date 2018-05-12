@@ -12,7 +12,7 @@ var app = new Vue({
     getVolunteers() {
       axios.get('/volunteers')
         .then(response => {
-          console.log(response);
+
           this.volunteers = response.data;
         })
         .catch(function (error) {
@@ -23,8 +23,8 @@ var app = new Vue({
     getRoles() {
       axios.get('/roles')
         .then(response => {
-          console.log(response);
           this.roles = response.data;
+          return response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -34,7 +34,7 @@ var app = new Vue({
     getRoleMap() {
       axios.get('/role_map')
         .then(response => {
-          console.log(response);
+
           this.roleMap = response.data;
         })
         .catch(function (error) {
@@ -45,7 +45,7 @@ var app = new Vue({
     getTrainings() {
       axios.get('/trainings')
         .then(response => {
-          console.log(response);
+
           this.trainings = response.data;
         })
         .catch(function (error) {
@@ -60,7 +60,6 @@ var app = new Vue({
       updates.forEach(element => {
         axios.get('/' + element)
           .then(response => {
-            console.log(response);
             this[element] = response.data;
           })
           .catch(function (error) {
@@ -69,32 +68,16 @@ var app = new Vue({
       });
     },
 
-    selectRole(code) {
-      i = this.selectedRoles.indexOf(code);
-      if (i == -1) {
-        this.selectedRoles.push(code)
+    toggleRoleSelect(roleCode) {
+      roleCode = String(roleCode);
+      index = this.selectedRoles.indexOf(roleCode);
+      if (index == -1) {
+        this.selectedRoles.push(roleCode);
       } else {
-        this.selectedRoles.splice(i, 1)
+        this.selectedRoles.splice(index, 1)
       }
-    },
-
-    everyRoleSelected() {
-      codes = this.roles.map(x => x.code)
-      this.selectedRoles.forEach(code => {
-        if (codes.indexOf(code) == -1) {
-          return false;
-        }
-      });
-      return true;
-    },
-
-    toggleAllRoles() {
-      if (this.everyRoleSelected()) {
-        this.selectedRoles = []
-      } else [
-        this.selectedRoles = this.roles.map(x => x.code)
-      ]
     }
+
   },
 
   mounted() {

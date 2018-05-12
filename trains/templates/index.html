@@ -33,12 +33,14 @@
     <link rel="stylesheet" href="%% url_for('static', filename='styles.css') %%">
 
     <script src="%% url_for('static', filename='axios.min.js') %%"></script>
-    <script src="%% url_for('static', filename='vue.min.js') %%"></script>
+    <!-- <script src="%% url_for('static', filename='vue.min.js') %%"></script>  -->
+    <script src="%% url_for('static', filename='vue.js') %%"></script>
+
 
   </head>
   <body>
-    <div id="main" class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+    <div id="main" class="mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">Trains</span>
           <div class="mdl-layout-spacer"></div>
@@ -53,11 +55,11 @@
           </div> -->
         </div>
       </header>
-      <div class="demo-ribbon"></div>
-      <main class="demo-main mdl-layout__content">
-        <div class="demo-container mdl-grid">
+      <div class="ribbon"></div>
+      <main class="main mdl-layout__content">
+        <div class="container mdl-grid">
           <div class="mdl-cell mdl-cell--1-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
+          <div class="content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
             <h3>Write the Email</h3>
             <div class="mdl-grid">
               <!-- Email Text Box -->
@@ -80,50 +82,54 @@
               </div>
             </div>
             <h3>Choose Recipients</h3>
+            <!-- All switch grid -->
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
                 <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="allRoles">
-                  <input @click="toggleAllRoles" type="checkbox" id="allRoles" class="mdl-switch__input">
+                  <!-- <input @click="toggleAllRoles" type="checkbox" id="allRoles" class="mdl-switch__input"> -->
+                  <input type="checkbox" id="allRoles" class="mdl-switch__input">
                   <span class="mdl-switch__label">Everyone</span>
                 </label>
                 <hr>
               </div>
             </div>
+            <!-- Role Select Grid -->
             <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                 <ul class="role-list">
                   <li v-for="role in roles.slice(0, aThird)">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
-                      <input @click="selectRole(role.code)" type="checkbox" :id="role.code" class="mdl-checkbox__input">
+                      <input type="checkbox" :id="role.code" class="mdl-checkbox__input">
                       <span class="mdl-checkbox__label">{{ role.title }}</span>
                     </label>
                   </li>
                 </ul>
-              </div>
-              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              </div> -->
+              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone" v-for="y, x in [(0, 1), (1, 2), (2, 3)]">
                 <ul class="role-list">
-                  <li v-for="role in roles.slice(aThird, aThird * 2)">
+                  <li v-for="role in roles.slice(aThird * x, aThird * y)">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
-                      <input @click="selectRole(role.code)" type="checkbox" :id="role.code" class="mdl-checkbox__input">
+                      <!-- Not using v-model here for...reasons -->
+                      <input type="checkbox" @click="toggleRoleSelect(role.code)" :id="role.code" class="mdl-checkbox__input">
                       <span class="mdl-checkbox__label">{{ role.title }}</span>
                     </label>
                   </li>
                 </ul>
               </div>
-              <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                 <ul class="role-list">
                   <li v-for="role in roles.slice(aThird * 2, aThird * 3)">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="role.code">
-                      <input @click="selectRole(role.code)" type="checkbox" :id="role.code" class="mdl-checkbox__input">
+                      <input type="checkbox" v-model="selectedRoles[role.code]" :id="role.code" class="mdl-checkbox__input">
                       <span class="mdl-checkbox__label">{{ role.title }}</span>
                     </label>
                   </li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
-        <footer class="demo-footer mdl-mini-footer">
+        <footer class="footer mdl-mini-footer">
           <div class="mdl-mini-footer--left-section">
             <ul class="mdl-mini-footer--link-list">
               <!-- Footer Links -->
