@@ -65,6 +65,7 @@
         <!-- Write the Email -->
         <div class="content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
           <h3>Write the Email</h3>
+          <!-- Email Text and Help Cards -->
           <div class="mdl-grid">
             <!-- Email Text Box -->
             <div class="mdl-cell mdl-cell--6-col">
@@ -78,14 +79,9 @@
                     <label class="mdl-textfield__label" for="emailText">Email Text</label>
                   </div>
                 </div>
-                <div class="mdl-card__actions mdl-card--border">
-                  <a @click="showPreview = true" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                    Preview
-                  </a>
-                </div>
               </div>
             </div>
-            <!-- Help Area -->
+            <!-- Help Card -->
             <div class="mdl-cell mdl-cell--6-col">
               <div id="help-card" class="mdl-card mdl-shadow--6dp">
                 <div class="mdl-card__title">
@@ -104,15 +100,15 @@
               </div>
             </div>
           </div>
-
-          <div class="mdl-grid" v-if="showPreview">
+          <!-- Email Preview Card -->
+          <div class="mdl-grid">
             <div class="mdl-cell--12-col">
               <hr>
-              <div id="preview-card" class="mdl-card mdl-shadow--6dp">
-                <div class="mdl-card__title">
+              <div id="preview-card" class="mdl-card mdl-color--indigo mdl-shadow--6dp">
+                <div class="mdl-card__title mdl-color-text--white">
                   <h2 class="mdl-card__title-text">Email Preview</h2>
                 </div>
-                <div class="mdl-card__supporting-text">
+                <div class="mdl-card__supporting-text mdl-color-text--white">
                   <!-- Content -->
                   <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--4-col">
@@ -123,18 +119,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="mdl-card__menu">
-                  <button @click="showPreview = false" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                    <i class="material-icons">close</i>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Choose Recipients -->
-        <div class="separator"></div>
+        <div class="green-separator mdl-shadow--2dp"></div>
         <div class="content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
 
           <h3>Choose Recipients</h3>
@@ -161,11 +152,12 @@
         </div>
 
         <!-- Review and Send -->
-        <div class="separator"></div>
+        <div class="red-separator"></div>
         <div class="content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
           <h3>Review and Send</h3>
         </div>
       </div>
+
       <footer class="footer mdl-mini-footer">
         <div class="mdl-mini-footer--left-section">
           <ul class="mdl-mini-footer--link-list">
