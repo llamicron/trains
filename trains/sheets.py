@@ -82,3 +82,18 @@ for vol in volunteers:
             vol[key] = [s.strip().upper() for s in vol[key].split(',')]
         except KeyError:
             vol[key] = []
+
+
+
+
+# {
+#     'memberid': '123abcxyz',
+#     'name': 'Luke Sweeney',
+#     'email': 'test@test.test'
+#     'role': {
+#         'SK': "Skipper"
+#     }
+#     'trainings': {
+#         'SCO_800': 'Youth Protection Training'
+#     },
+# }

@@ -1,27 +1,20 @@
 var app = new Vue({
   el: "#main",
   data: {
-    volunteers: [],
     roles: [],
-    roleMap: {},
-    trainings: [],
+    emailText: 'Hi {name},\n\nYou have a few incomplete trainings. They are:\n\n{trainings}\n\nThanks!',
+    emailPreviewText: '',
     selectedRoles: [],
     allRoles: false,
-    showPreview: true
+    sendText: 'Send',
+    exampleVolunteer: {
+      name: "John Doe",
+      unit: "Troop 999",
+      trainings: ['Safety Afloat', 'Youth Protection Training'],
+    }
   },
 
   methods: {
-    getVolunteers() {
-      axios.get('/volunteers')
-        .then(response => {
-
-          this.volunteers = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-
     getRoles() {
       axios.get('/roles')
         .then(response => {
@@ -31,43 +24,6 @@ var app = new Vue({
         .catch(function (error) {
           console.log(error);
         });
-    },
-
-    getRoleMap() {
-      axios.get('/role_map')
-        .then(response => {
-
-          this.roleMap = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-
-    getTrainings() {
-      axios.get('/trainings')
-        .then(response => {
-
-          this.trainings = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-
-    updateAll() {
-      // Updates the following
-      updates = ['trainings', 'roles', 'volunteers', 'roleMap']
-
-      updates.forEach(element => {
-        axios.get('/' + element)
-          .then(response => {
-            this[element] = response.data;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
     },
 
     // Switches a single role code
@@ -106,10 +62,48 @@ var app = new Vue({
       }
     },
 
+    processEmailExampleText() {
+      this.emailPreviewText = this.emailText;
+      this.emailPreviewText = this.emailPreviewText.replace('{name}', this.exampleVolunteer.name);
+      this.emailPreviewText = this.emailPreviewText.replace('{trainings}', this.exampleVolunteer.trainings.join(', '));
+    },
+
+    send() {
+      if (this.sendText == 'Send') {
+        this.sendText = "Are you sure?";
+      } else {
+        if (this.emailText == '' || this.selectedRoles.length == 0) {
+          this.showSnackbar('Please fill everything in');
+          return false;
+        }
+        console.log(this.selectedRoles);
+        axios.post('/send', {
+          email_text: this.emailText,
+          sent_roles: this.selectedRoles
+        }).then(response => {
+          console.log(response);
+        }).catch(error => {
+          console.log(error);
+        })
+
+        this.showSnackbar('Email sent');
+        this.sendText = 'Send';
+      }
+    },
+
+    showSnackbar(message) {
+      snackbarContainer = document.querySelector('#sent-snackbar');
+      var data = {
+        message: message,
+        timeout: 2000,
+      };
+      snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    }
   },
 
   mounted() {
-    this.updateAll();
+    this.getRoles();
+    this.processEmailExampleText();
   },
 
   computed: {
@@ -121,6 +115,10 @@ var app = new Vue({
   watch: {
     allRoles: function() {
       this.allRolesOn(this.allRoles);
+    },
+    emailText: function() {
+      this.processEmailExampleText();
     }
   },
 })
+

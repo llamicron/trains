@@ -1,4 +1,8 @@
 /* Custom */
+#reviewTable {
+  width: 100%;
+}
+
 .help-list {
   list-style: none;
   padding-left: 0;

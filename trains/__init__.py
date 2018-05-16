@@ -1,9 +1,11 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 
-try:
-    from sheets import volunteers, trainings, roles, role_map
-except ImportError:
-    from .sheets import volunteers, trainings, roles, role_map
+# try:
+from mailer import Mailer
+from sheets import volunteers, trainings, roles, role_map
+# except ImportError:
+#     from .mailer import Mailer
+#     from .sheets import volunteers, trainings, roles, role_map
 
 
 class CustomFlask(Flask):
@@ -19,29 +21,23 @@ class CustomFlask(Flask):
 
 
 app = CustomFlask(__name__)
+app.mailer = Mailer()
 
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
-
-@app.route('/volunteers', methods=['GET'])
-def serve_volunteers():
-    return jsonify(volunteers)
-
-@app.route('/trainings', methods=['GET'])
-def serve_trainings():
-    return jsonify(trainings)
-
-@app.route('/roleMap', methods=['GET'])
-def serve_role_map():
-    return jsonify(role_map)
-
 @app.route('/roles', methods=['GET'])
 def serve_roles():
     return jsonify(roles)
 
+@app.route('/send', methods=['POST'])
+def send_email():
+    target_roles = request.get_json()['sent_roles']
+    email_text = request.get_json()['email_text']
+    app.mailer.send(email_text, target_roles)
+    return 'True'
 
 def main():
     app.config['DEBUG'] = False
